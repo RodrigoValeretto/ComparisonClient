@@ -17,7 +17,7 @@ class AnonymizeClient(object):
             '{}:{}'.format(self.host, self.server_port))
 
         # bind the client and the server
-        self.stub = pb2_grpc.ComparerStub(self.channel)
+        self.stub = pb2_grpc.AnonymizerStub(self.channel)
 
     def call_service(self, image, guid):
         """

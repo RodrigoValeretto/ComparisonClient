@@ -23,17 +23,18 @@ if __name__ == '__main__':
         print("This client takes one argument: integer 1 or 2")
         print("1 - Call anonymization service")
         print("2 - Call comparison service")
+        sys.exit()
 
     match sys.argv[1]:
-        case 1:
+        case "1":
             client = AnonymizeClient()
-        case 2:
+        case "2":
             client = CompareClient()
 
     try:
         image_bytes = open_image(image_path)
         if(guid == None):
-            guid = uuid4(image_bytes)
+            guid = uuid4()
     except e:
         print("Error opening image")
 
