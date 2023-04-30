@@ -2,39 +2,13 @@
 # Code to generate GPRC classes
 # python3 -m grpc_tools.protoc --proto_path=protos --python_out=. --pyi_out=. --grpc_python_out=. protos/compare.proto
 
+import sys
 from uuid import uuid4
-import grpc
-import compare_pb2 as pb2
-import compare_pb2_grpc as pb2_grpc
+from compare_client import CompareClient
+from anonymize_client import AnonymizeClient
 
 image_path = "./lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg"
-
-
-class UnaryClient(object):
-    """
-    Client for gRPC functionality
-    """
-
-    def __init__(self):
-        self.host = 'localhost'
-        self.server_port = 5099
-
-        # instantiate a channel
-        self.channel = grpc.insecure_channel(
-            '{}:{}'.format(self.host, self.server_port))
-
-        # bind the client and the server
-        self.stub = pb2_grpc.ComparerStub(self.channel)
-
-    def get_compare(self, image, guid):
-        """
-        Client function to call the rpc for Compare
-        """
-        compare_rq = pb2.CompareRQ()
-        compare_rq.image = image
-        compare_rq.GUID = str(guid)
-        print(f'{compare_rq}')
-        return self.stub.Compare(compare_rq)
+guid = None
 
 
 def open_image(path):
@@ -45,10 +19,23 @@ def open_image(path):
 
 
 if __name__ == '__main__':
-    client = UnaryClient()
+    if(len(sys.argv) != 2):
+        print("This client takes one argument: integer 1 or 2")
+        print("1 - Call anonymization service")
+        print("2 - Call comparison service")
 
-    image_bytes = open_image(image_path)
-    guid = uuid4()
+    match sys.argv[1]:
+        case 1:
+            client = AnonymizeClient()
+        case 2:
+            client = CompareClient()
 
-    compare_rs = client.get_compare(image_bytes, guid)
-    print(f'{compare_rs}')
+    try:
+        image_bytes = open_image(image_path)
+        if(guid == None):
+            guid = uuid4(image_bytes)
+    except e:
+        print("Error opening image")
+
+    res = client.call_service(image_bytes, guid)
+    print(f'{res}')

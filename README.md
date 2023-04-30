@@ -9,7 +9,7 @@ It is also important to install and configure GRPC tools for python, the documen
 
 To generate the GRPC files correctly use the command
 ```shell
-python3 -m grpc_tools.protoc --proto_path=protos --python_out=. --pyi_out=. --grpc_python_out=. protos/compare.proto
+python3 -m grpc_tools.protoc --proto_path=protos --python_out=. --pyi_out=. --grpc_python_out=. protos/*.proto
 ```
 
 To run the project, being in the root folder of it, run
