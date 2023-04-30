@@ -25,6 +25,6 @@ class AnonymizeClient(object):
         """
         anonymize_rq = pb2.AnonymizeRQ()
         anonymize_rq.image = image
-        anonymize_rq.GUID = str(guid)
+        anonymize_rq.GUID = guid
         print(f'{anonymize_rq}')
         return self.stub.Anonymize(anonymize_rq)

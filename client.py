@@ -34,7 +34,7 @@ if __name__ == '__main__':
     try:
         image_bytes = open_image(image_path)
         if(guid == None):
-            guid = uuid4()
+            guid = str(uuid4())
     except e:
         print("Error opening image")
 
