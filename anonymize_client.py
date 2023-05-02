@@ -9,12 +9,13 @@ class AnonymizeClient(object):
     """
 
     def __init__(self):
-        self.host = 'localhost'
-        self.server_port = 5099
+        self.host = "localhost"
+        self.server_port = 5098
 
         # instantiate a channel
         self.channel = grpc.insecure_channel(
-            '{}:{}'.format(self.host, self.server_port))
+            "{}:{}".format(self.host, self.server_port)
+        )
 
         # bind the client and the server
         self.stub = pb2_grpc.AnonymizerStub(self.channel)
@@ -25,6 +26,6 @@ class AnonymizeClient(object):
         """
         anonymize_rq = pb2.AnonymizeRQ()
         anonymize_rq.image = image
-        anonymize_rq.GUID = guid
-        print(f'{anonymize_rq}')
+        anonymize_rq.guid = guid
+        print(f"{anonymize_rq}")
         return self.stub.Anonymize(anonymize_rq)

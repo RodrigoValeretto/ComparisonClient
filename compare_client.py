@@ -9,12 +9,13 @@ class CompareClient(object):
     """
 
     def __init__(self):
-        self.host = 'localhost'
+        self.host = "localhost"
         self.server_port = 5099
 
         # instantiate a channel
         self.channel = grpc.insecure_channel(
-            '{}:{}'.format(self.host, self.server_port))
+            "{}:{}".format(self.host, self.server_port)
+        )
 
         # bind the client and the server
         self.stub = pb2_grpc.ComparerStub(self.channel)
@@ -25,6 +26,6 @@ class CompareClient(object):
         """
         compare_rq = pb2.CompareRQ()
         compare_rq.image = image
-        compare_rq.GUID = str(guid)
-        print(f'{compare_rq}')
+        compare_rq.guid = guid
+        print(f"{compare_rq}")
         return self.stub.Compare(compare_rq)
