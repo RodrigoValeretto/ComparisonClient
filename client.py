@@ -5,7 +5,9 @@ import sys
 from uuid import uuid4
 from compare_client import CompareClient
 from anonymize_client import AnonymizeClient
+import numpy as np
 import asyncio
+from PIL import Image
 
 image_path = "./lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg"
 guid = None
@@ -14,8 +16,12 @@ guid = None
 def open_image(path):
     with open(path, "rb") as image:
         f = image.read()
-        b = bytes(f)
-        return b
+        return f
+
+
+def open_image2(path):
+    image = Image.open(path)
+    return image.tobytes()
 
 
 if __name__ == "__main__":

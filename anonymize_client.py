@@ -10,7 +10,7 @@ class AnonymizeClient(object):
 
     def __init__(self):
         self.host = "localhost"
-        self.server_port = 5098
+        self.server_port = 5099
 
         # instantiate a channel
         self.channel = grpc.insecure_channel(
