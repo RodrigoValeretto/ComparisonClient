@@ -9,8 +9,15 @@ import numpy as np
 import asyncio
 from PIL import Image
 
-image_path = "./lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg"
-guid = None
+image_path_1 = "./lfw/Aaron_Eckhart/Aaron_Eckhart_0001.jpg"
+image_path_2 = "./lfw/Alexander_Downer/Alexander_Downer_0001.jpg"
+image_path_3 = "./lfw/Alexander_Downer/Alexander_Downer_0002.jpg"
+image_path_4 = "./lfw/Alexander_Downer/Alexander_Downer_0003.jpg"
+image_path_5 = "./lfw/Alexander_Downer/Alexander_Downer_0004.jpg"
+
+image_path = image_path_2
+
+guid = "8d1c0c1d-1634-4f81-9d70-696ba5e726ab"
 
 
 def open_image(path):
@@ -41,8 +48,9 @@ if __name__ == "__main__":
         image_bytes = open_image(image_path)
         if guid == None:
             guid = str(uuid4())
-    except e:
-        print("Error opening image")
+    except Exception as e:
+        print("Error creating request:", e)
+        exit()
 
     res = client.call_service(image_bytes, guid)
-    print(f"{res}")
+    print(res)
